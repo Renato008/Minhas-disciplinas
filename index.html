@@ -5,18 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minhas Disciplinas Avançado</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div class="container">
-<h1>Minhas Disciplinas</h1>
+<header>
+    <h1>📚 Minhas Disciplinas</h1>
+</header>
 
-<div>
-    <input type="text" id="novaDisciplina" placeholder="Nova disciplina">
-    <button onclick="adicionarDisciplina()">Adicionar</button>
-</div>
+<main class="container">
+    <!-- Controles principais -->
+    <section class="top-controls">
+        <input type="text" id="novaDisciplina" placeholder="Adicionar nova disciplina...">
+        <button onclick="adicionarDisciplina()">Adicionar</button>
+        
+        <input type="text" id="busca" placeholder="Buscar disciplinas ou anotações..." oninput="atualizarLista()">
+    </section>
 
-<ul id="listaDisciplinas"></ul>
-</div>
+    <!-- Lista de disciplinas -->
+    <section>
+        <ul id="listaDisciplinas" class="draggable"></ul>
+    </section>
+
+    <!-- Gráfico resumo semanal -->
+    <section class="grafico-container">
+        <h2>📊 Resumo Semanal</h2>
+        <canvas id="graficoResumo"></canvas>
+    </section>
+</main>
+
+<footer>
+    <p>Aplicativo de estudo desenvolvido por você. Dados salvos no navegador.</p>
+</footer>
 
 <script src="script.js"></script>
 </body>
