@@ -4,57 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minhas Disciplinas Avançado</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f4f8;
-    margin: 0;
-    padding: 20px;
-}
-h1 {
-    text-align: center;
-    color: #004d80;
-    margin-bottom: 20px;
-}
-.container {
-    max-width: 700px;
-    margin: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-input[type=text] {
-    width: 65%;
-    padding: 10px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-button {
-    padding: 10px 15px;
-    background-color: #004d80;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-button:hover { background-color: #003366; }
-ul { list-style: none; padding-left: 0; }
-li { margin-bottom: 12px; }
-.disciplina {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background: #e6f0fa;
-    transition: background 0.3s;
-}
-.disciplina:hover { background: #d0e4f7; }
-.historico { margin-left: 20px; margin-top: 5px; }
-.resumo { font-size: 0.9em; color: #333; margin-top: 5px; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
@@ -68,70 +18,6 @@ li { margin-bottom: 12px; }
 <ul id="listaDisciplinas"></ul>
 </div>
 
-<script>
-let disciplinas = JSON.parse(localStorage.getItem('disciplinas')) || [];
-
-function salvarDisciplinas() {
-    localStorage.setItem('disciplinas', JSON.stringify(disciplinas));
-}
-
-function adicionarDisciplina() {
-    const input = document.getElementById('novaDisciplina');
-    const nome = input.value.trim();
-    if (nome === "") return;
-
-    disciplinas.push({ nome: nome, historico: [] });
-    input.value = "";
-    atualizarLista();
-    salvarDisciplinas();
-}
-
-function adicionarHistorico(index) {
-    const anotacao = prompt("O que você estudou esta semana?");
-    if (anotacao && anotacao.trim() !== "") {
-        disciplinas[index].historico.push({ texto: anotacao.trim(), data: new Date().toLocaleDateString() });
-        atualizarLista();
-        salvarDisciplinas();
-    }
-}
-
-function atualizarLista() {
-    const ul = document.getElementById('listaDisciplinas');
-    ul.innerHTML = "";
-
-    disciplinas.forEach((disciplina, index) => {
-        const li = document.createElement('li');
-        li.className = 'disciplina';
-        const resumo = disciplina.historico.length > 0 ? ` (${disciplina.historico.length} anotações)` : '';
-        li.innerHTML = `<strong>📘 ${disciplina.nome}</strong>${resumo} 
-                        <button onclick="adicionarHistorico(${index})">Adicionar estudo</button>
-                        <button onclick="removerDisciplina(${index})" style="background:red; margin-left:5px;">Remover</button>`;
-
-        if (disciplina.historico.length > 0) {
-            const ulHist = document.createElement('ul');
-            ulHist.className = 'historico';
-            disciplina.historico.forEach(item => {
-                const liHist = document.createElement('li');
-                liHist.textContent = `[${item.data}] ${item.texto}`;
-                ulHist.appendChild(liHist);
-            });
-            li.appendChild(ulHist);
-        }
-
-        ul.appendChild(li);
-    });
-}
-
-function removerDisciplina(index) {
-    if (confirm(`Deseja remover a disciplina "${disciplinas[index].nome}"?`)) {
-        disciplinas.splice(index, 1);
-        atualizarLista();
-        salvarDisciplinas();
-    }
-}
-
-// Inicializa lista ao carregar
-atualizarLista();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
